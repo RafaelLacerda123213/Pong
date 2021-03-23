@@ -6,35 +6,43 @@ public class bola : MonoBehaviour
 {
     [SerializeField]
     float velocidade = 5f;
-    float runTime = 2f;
-    float pauseTime = 2f;
 
-    bool paused = false;
-    float currentRunTime = 0.0f;
+    bool bolaFoiLancada = false;
+
+    [SerializeField]
+    float tempoDeEspera = 2f;
+
+    float tempoDecorrido = 0;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(BolaMovimento());
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (bolaFoiLancada == false)
+        {
 
+            tempoDecorrido += Time.deltaTime;
+
+            if(tempoDecorrido >= tempoDeEspera)
+            {
+              GetComponent<Rigidbody2D>().velocity = velocidade * Random.onUnitSphere;
+                bolaFoiLancada = true;
+            }
+         
+        }
         
     }
 
 
-    IEnumerator BolaMovimento()
-    {
-        yield return new WaitForSeconds(2f);
-        GetComponent<Rigidbody2D>().velocity = velocidade * Random.insideUnitSphere;
-
-    }
-
 
 }
+
+
 
 
